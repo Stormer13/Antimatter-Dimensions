@@ -1,0 +1,33 @@
+// ==UserScript==
+// @name         ADIPRate
+// @version      0.1
+// @description  Add an IP/whatever display to the main page
+// @author       You
+// @match        http*://ivark.github.io/
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+
+    var node=document.createElement("span");
+    node.style.display="inline-block";
+    $("#infinityPoints2")[0].parentNode.appendChild(node);
+    $("#infinityPoints2")[0].setAttribute("class","");
+    node.parentNode.setAttribute("class","IP");
+    node.parentNode.style.position="absolute";
+    node.parentNode.style.left="65%";
+    window.bestippm=0;
+    window.bestip=0;
+    var reset=document.createElement("button");
+    reset.onclick=function(){bestippm=0;};
+    reset.innerHTML="Reset";
+    $("#infinityPoints2")[0].parentNode.appendChild(reset);
+    setInterval(function(){
+        var ippm=$("#averagerun")[0].innerHTML.split(" ")[12];
+        var ippm2=$("#run1")[0].innerHTML.split(" ")[12];
+        if(player.thisInfinityTime>1&&gainedInfinityPoints()/player.thisInfinityTime>bestippm){bestippm=gainedInfinityPoints()/player.thisInfinityTime;bestip=gainedInfinityPoints();}
+        node.innerHTML="Last 10: "+ippm+"/min<br>Last: "+ippm2+"/min<br>Best IP amount: "+bestip+"<br>Best IP rate:"+shorten(bestippm*600)+"/min";
+    },100);
+})();
